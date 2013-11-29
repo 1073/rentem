@@ -17,20 +17,19 @@
     logout/1
 ]).
 
-
+% @doc identify a need for login
 require_login(SessionID) ->
-    io:format("SessionID=~p~n", [SessionID]),
     case boss_session:get_session_data(SessionID, ?SESSION_USER_ID) of
         {error, _} -> {redirect, "/signup"};
         Id ->
             case boss_db:find(Id) of
                 {error, _} -> {redirect, "/signup"};
                 User ->
-                    io:format("User=~p~n", [User]),
                     {ok, User}
             end
      end.
 
+% @doc check user and save userid in session
 login(SessionID, UserId, Password) ->
     case check_login(UserId, Password) of
         {ok, User} ->
@@ -41,6 +40,7 @@ login(SessionID, UserId, Password) ->
             {error, Message}
     end.
 
+% @doc session delete for logout
 logout(SessionID) ->
     boss_session:delete_session(SessionID).
 

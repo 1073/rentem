@@ -1,3 +1,9 @@
+%% --------------------------------------------------------------------
+%% @author Tonami SUMIYAMA <smymtnm@gmail.com>
+%% @version 0.1
+%% @end
+%% --------------------------------------------------------------------
+
 -module(request_lib).
 
 %% ====================================================================
@@ -9,7 +15,7 @@
 
 -type param()::[{atom(), binary()}].
 
-
+% @doc convert binary json to proplists
 -spec param(BinaryJSON::binary())->Result::param() | [].
 param(BinaryJSON)->
     List = jsonx:decode(BinaryJSON, [{format, proplist}]),
